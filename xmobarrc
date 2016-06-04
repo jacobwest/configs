@@ -1,0 +1,18 @@
+Config { font = "xft:terminus"
+       , bgColor = "black"
+       , commands = [ Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
+                    , Run Memory ["-t", "Mem: <usedratio>%"] 10
+		    , Run Swap [] 10
+		    -- maybe set high/low for dynnetwork
+		    , Run DynNetwork [] 10
+		    --, Run Network "enp3s0" ["-L","0","-H","32","--normal","green","--high","red"] 10
+		    , Run Date "<fc=red>%a %b %_d %Y</fc> * <fc=green>%H:%M:%S</fc>" "date" 10
+		    , Run Com "hostname" [] "" 36000
+		    , Run Com "nixos-version" [] "nix" 36000
+		    , Run Com "uname" ["-s","-r"] "" 36000
+		    , Run StdinReader
+		    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "NixOS %nix% * %uname% * %StdinReader% }{  %cpu% | %memory% | %swap% | %dynnetwork% * %date%"
+       }
